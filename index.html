@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="div1">
+            <div class="datetime-box">
+                <div id="day-time"></div>
+                <div id="date"></div>
+            </div>
+
+
+        </div>
+        <div class="grid">
+            <div class="todo">
+                <h1>To-Do List</h1>
+                <div class="input-row">
+                    <input class="list-inp" id="taskInput" type="text" placeholder="Add a new task...">
+                    <button onclick="addTask()" class="add-btn">Add</button>
+                </div>
+                <ul id="taskList"></ul>
+            </div>
+
+            <!-- <div class="water">
+                <p style="color: rgba(255, 0, 0, 0.986); font-size: 18px;"> <span id="water-amt">0</span> / 4 L</p>
+                <button class="water-btn" onclick="AddWater">Add</button>
+            </div> -->
+            <div class="water">
+                <p style="color: rgb(255, 0, 0); font-size: 18px;">
+                    <span id="water-amt">0</span> / 4 L
+                </p>
+                <button class="water-btn" onclick="AddWater()">Add</button>
+                <button class="water-btn" onclick="RemoveWater()">Remove</button>
+            </div>
+
+            <div class="workout">
+                <ion-icon name="barbell-outline" size="large"></ion-icon>
+                <button class="water-btn">Go</button>
+            </div>
+
+            <!-- <div class="dated-todo"> -->
+            <div class="dated-todo">
+                <h1 style="color: white;">Schedule Task</h1>
+
+                <div class="input-row" style="justify-content:center; gap:5px;">
+                    <input type="text" id="dtaskInput" class="list-inp2" placeholder="Task name..."
+                        style="max-width:160px;">
+                    <input type="date" id="dDate" class="list-inp2" style=" width:20px;">
+                    <input type="time" id="dTime" class="list-inp2" style="width:100px;">
+                    <button class="add-btn" onclick="addDatedTask()">Add</button>
+                </div>
+
+                <ul id="datedTaskList"></ul>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
+<style>
+    body {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    :root {
+        --p-color: #e9e9ea;
+        --s-color: #6f5a4b;
+    }
+
+    .hero {
+        width: 100vw;
+        height: 100vh;
+        background-color: #e9e9ea;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .div1 {
+        height: 80px;
+        width: 480px;
+        position: sticky;
+        left: 8px;
+        top: 10px;
+        border: 1px solid #6f5a4b;
+        background-color: silver;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 10;
+        backdrop-filter: blur(5px);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(5, 120px);
+        gap: 10px;
+        width: 95vw;
+        position: absolute;
+        top: 100px;
+        left: 10px;
+
+    }
+
+    .todo {
+        grid-column: 1/span 3;
+        grid-row: 1/span 4;
+        border: 1px solid #6f5a4b;
+        background-color: #6f5a4b;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 15px;
+    }
+
+    .input-row {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .list-inp {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ffffff;
+        border-radius: 10px 0px 0px 10px;
+        outline: none;
+        margin: 10px 0px 10px 10px;
+    }
+
+    .add-btn {
+        background: #6f5a4b;
+        color: white;
+        border: 1px solid white;
+        padding: 8px 12px;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        margin: 10px 10px 10px 0px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        background: #f9f9f9;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        margin: 15px;
+    }
+
+    li span {
+        cursor: pointer;
+    }
+
+    li span.completed {
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    li button {
+        background: transparent;
+        color: #6f5a4b;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .water {
+        grid-column: 4;
+        grid-row: 1/span 2;
+        border: 1px solid #6f5a4b;
+        background-color: silver;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        text-align: center;
+    }
+
+    .water-btn {
+        background-color: #6f5a4b;
+        color: white;
+        border: #6f5a4b;
+        padding: 15px 25px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .workout {
+        grid-column: 4;
+        grid-row: 3/ span 2;
+        border: 1px solid #6f5a4b;
+        background-color: silver;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        justify-content: space-evenly;
+
+    }
+
+    ion-icon {
+        color: rgb(255, 8, 0);
+    }
+
+    .dated-todo {
+        grid-column: 1/span 4;
+        grid-row: 5;
+        border: 1px solid #6f5a4b;
+        background-color: #6f5a4b;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 140px;
+        padding: 0px;
+    }
+
+    .list-inp2 {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ffffff;
+        border-radius: 10px 0px 0px 10px;
+        outline: none;
+        margin: 10px 0px 10px 10px;
+    }
+
+    .list-inp2:nth-child(2) {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ffffff;
+        border-radius: 2px;
+        outline: none;
+        margin: 10px 0px 10px 0px;
+    }
+
+    .list-inp2:nth-child(3) {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ffffff;
+        border-radius: 2px;
+        outline: none;
+        margin: 10px 0px 10px 0px;
+    }
+
+    /* Scrollbar for normal todo list */
+    #taskList {
+        overflow-y: auto;
+        max-height: 300px;
+
+        /* Scrollbar width */
+        scrollbar-width: thin;
+        scrollbar-color: #6f5a4b #e9e9ea;
+        /* thumb color | track color */
+    }
+
+    /* Chrome, Edge, Safari custom scrollbar */
+    #taskList::-webkit-scrollbar {
+        width: 8px;
+
+    }
+
+    #taskList::-webkit-scrollbar-track {
+        background: #e9e9ea;
+        border-radius: 10px;
+    }
+
+    #taskList::-webkit-scrollbar-thumb {
+        background: #6f5a4b;
+        border-radius: 10px;
+        border: 2px solid #e9e9ea;
+    }
+
+    #taskList::-webkit-scrollbar-thumb:hover {
+        background: #5a4639;
+    }
+
+    .water div {
+        margin-bottom: 5px;
+    }
+
+    .datetime-box {
+        background: transparent;
+        /* no box, clean look */
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        margin: 10px auto;
+    }
+
+    /* First row: Day + Time */
+    #day-time {
+        font-size: 24px;
+        /* medium size */
+        font-weight: 700;
+        color:var(--s-color);
+        /* your primary color */
+    }
+
+    /* Second row: Date */
+    #date {
+        font-size: 16px;
+        /* small size */
+        font-weight: 500;
+        color:var(--s-color);
+        opacity: 0.8;
+        margin-top: 3px;
+    }
+</style>
+<script>
+    // ---------------- NORMAL TODO ---------------- //
+
+    const input = document.getElementById("taskInput");
+    const list = document.getElementById("taskList");
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    function renderTasks() {
+        list.innerHTML = "";
+        tasks.forEach((task, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+      <span class="${task.completed ? 'completed' : ''}" onclick="toggleTask(${index})">${task.text}</span>
+      <button onclick="deleteTask(${index})">&times;</button>
+    `;
+            list.appendChild(li);
+        });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+        const text = input.value.trim();
+        if (text === "") return;
+        tasks.push({ text, completed: false });
+        input.value = "";
+        renderTasks();
+    }
+
+    function toggleTask(index) {
+        tasks[index].completed = !tasks[index].completed;
+        renderTasks();
+    }
+
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        renderTasks();
+    }
+
+    renderTasks();
+
+
+    // ---------------- WATER ---------------- //
+
+    // const water = document.getElementById("water-amt");
+    // let waterValue = parseFloat(localStorage.getItem("water") || "0");
+    // water.innerText = waterValue.toFixed(1);
+
+    // function AddWater() {
+    //     if (waterValue < 4) {
+    //         waterValue += 0.25;
+    //         if (waterValue > 4) waterValue = 4;
+    //         updateWater();
+    //     }
+    // }
+
+    // function RemoveWater() {
+    //     if (waterValue > 0) {
+    //         waterValue -= 0.25;
+    //         if (waterValue < 0) waterValue = 0;
+    //         updateWater();
+    //     }
+    // }
+
+    // function updateWater() {
+    //     water.innerText = waterValue.toFixed(1);
+    //     localStorage.setItem("water", waterValue);
+
+    //     if (waterValue >= 3.5) {
+    //         water.style.color = "green";
+    //     } else if (waterValue >= 2) {
+    //         water.style.color = "gold";
+    //     } else {
+    //         water.style.color = "red";
+    //     }
+    // }
+    // ---------------- WATER SYSTEM (AUTO RESET + NOTIFICATIONS + PROGRESS BAR) ---------------- //
+
+    // ---------------- WATER SYSTEM (RESET ONLY AFTER MIDNIGHT) ---------------- //
+
+    const water = document.getElementById("water-amt");
+
+    let waterValue = parseFloat(localStorage.getItem("water") || "0");
+    let savedDate = localStorage.getItem("waterDate");
+
+    // Today’s date (YYYY-MM-DD)
+    let today = new Date().toISOString().split("T")[0];
+
+    // If first-time use → set date
+    if (!savedDate) {
+        localStorage.setItem("waterDate", today);
+        savedDate = today;
+    }
+
+    // 🔥 RESET ONLY IF THE CALENDAR DATE HAS CHANGED (midnight)
+    if (savedDate !== today) {
+        waterValue = 0;
+        localStorage.setItem("water", "0");
+        localStorage.setItem("waterDate", today);
+    }
+
+    water.innerText = waterValue.toFixed(1);
+
+
+    // --------- PROGRESS BAR --------- //
+
+    let progressBar = document.createElement("div");
+    progressBar.style.width = "80%";
+    progressBar.style.height = "12px";
+    progressBar.style.background = "#ddd";
+    progressBar.style.borderRadius = "10px";
+    progressBar.style.overflow = "hidden";
+    progressBar.style.marginTop = "5px";
+
+    let barFill = document.createElement("div");
+    barFill.style.height = "100%";
+    barFill.style.width = "0%";
+    barFill.style.background = "#6f5a4b";
+    barFill.style.transition = "0.3s";
+
+    progressBar.appendChild(barFill);
+    document.querySelector(".water").appendChild(progressBar);
+
+
+    // -------- UPDATE WATER -------- //
+
+    function updateWater() {
+        water.innerText = waterValue.toFixed(1);
+        localStorage.setItem("water", waterValue);
+        localStorage.setItem("waterDate", today);
+
+        let percent = (waterValue / 4) * 100;
+        barFill.style.width = percent + "%";
+
+        if (waterValue >= 3.5) {
+            water.style.color = "green";
+        } else if (waterValue >= 2) {
+            water.style.color = "gold";
+        } else {
+            water.style.color = "red";
+        }
+    }
+
+
+    // -------- ADD WATER -------- //
+
+    function AddWater() {
+        if (waterValue < 4) {
+            waterValue += 0.25;
+            if (waterValue > 4) waterValue = 4;
+
+            updateWater();
+            notifyGoal();
+        }
+    }
+
+
+    // -------- REMOVE WATER -------- //
+
+    function RemoveWater() {
+        if (waterValue > 0) {
+            waterValue -= 0.25;
+            if (waterValue < 0) waterValue = 0;
+
+            updateWater();
+        }
+    }
+
+
+    // -------- NOTIFICATIONS -------- //
+
+    // Ask for permission
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
+
+    // Notify when water goal reached
+    function notifyGoal() {
+        if (waterValue >= 4) {
+            new Notification("🎉 Water Goal Reached!", {
+                body: "You completed 4 liters today!",
+            });
+        }
+    }
+
+    // Remind every 2 hours
+    setInterval(() => {
+        new Notification("💧 Water Reminder", {
+            body: "Time to drink water! Stay hydrated.",
+        });
+    }, 2 * 60 * 60 * 1000); // Every 2 hours
+
+
+    // ---------------- DATED TODO (UPGRADED) ---------------- //
+
+    const dList = document.getElementById("datedTaskList");
+    let datedTasks = JSON.parse(localStorage.getItem("datedTasks")) || [];
+
+    function renderDatedTasks() {
+        dList.innerHTML = "";
+
+        // Sort nearest date first
+        datedTasks.sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+
+        const now = new Date();
+        const todayStr = now.toISOString().split("T")[0];
+
+        datedTasks.forEach((task, index) => {
+            const li = document.createElement("li");
+
+            // Determine status color
+            const taskDate = new Date(task.datetime);
+            let color = "black";
+
+            if (task.completed) {
+                color = "green";
+            } else if (taskDate < now) {
+                color = "red";         // overdue
+            } else if (task.date === todayStr) {
+                color = "blue";        // today
+            }
+
+            li.innerHTML = `
+            <span style="color:${color};" class="${task.completed ? 'completed' : ''}">
+                <b>${task.text}</b><br>
+                <small>${task.date} • ${task.time}</small>
+            </span>
+
+            <div>
+                <button onclick="completeDatedTask(${index})">✔</button>
+                <button onclick="editDatedTask(${index})">✎</button>
+                <button onclick="deleteDatedTask(${index})">&times;</button>
+            </div>
+        `;
+
+            dList.appendChild(li);
+        });
+
+        localStorage.setItem("datedTasks", JSON.stringify(datedTasks));
+    }
+
+
+    // ADD TASK
+    function addDatedTask() {
+        const text = document.getElementById("dtaskInput").value.trim();
+        const date = document.getElementById("dDate").value;
+        const time = document.getElementById("dTime").value;
+
+        if (!text || !date || !time) return;
+
+        const datetime = `${date}T${time}`;
+
+        datedTasks.push({ text, date, time, datetime, completed: false });
+
+        document.getElementById("dtaskInput").value = "";
+        document.getElementById("dDate").value = "";
+        document.getElementById("dTime").value = "";
+
+        renderDatedTasks();
+    }
+
+
+    // COMPLETE
+    function completeDatedTask(index) {
+        datedTasks[index].completed = !datedTasks[index].completed;
+        renderDatedTasks();
+    }
+
+
+    // DELETE
+    function deleteDatedTask(index) {
+        datedTasks.splice(index, 1);
+        renderDatedTasks();
+    }
+
+
+    // EDIT
+    function editDatedTask(index) {
+        const task = datedTasks[index];
+
+        const newText = prompt("Edit task:", task.text);
+        if (!newText) return;
+
+        const newDate = prompt("Edit date (YYYY-MM-DD):", task.date);
+        if (!newDate) return;
+
+        const newTime = prompt("Edit time (HH:MM):", task.time);
+        if (!newTime) return;
+
+        task.text = newText;
+        task.date = newDate;
+        task.time = newTime;
+        task.datetime = `${newDate}T${newTime}`;
+
+        renderDatedTasks();
+    }
+
+    renderDatedTasks();
+    //---------
+
+    function updateDateTime() {
+        const now = new Date();
+
+        const day = now.toLocaleDateString("en-IN", { weekday: "long" });
+        const time = now.toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        const dateFull = now.toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+
+        document.getElementById("day-time").textContent = `${day}, ${time}`;
+        document.getElementById("date").textContent = dateFull;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+
+</script>
