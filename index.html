@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DayMate</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+
 </head>
 
 <body>
@@ -207,7 +210,7 @@
         background-color: #6f5a4b;
         color: white;
         border: #6f5a4b;
-        padding: 15px 25px;
+        padding: 15px 20px;
         border-radius: 10px;
         cursor: pointer;
     }
@@ -320,7 +323,7 @@
         font-size: 24px;
         /* medium size */
         font-weight: 700;
-        color:var(--s-color);
+        color: var(--s-color);
         /* your primary color */
     }
 
@@ -329,7 +332,7 @@
         font-size: 16px;
         /* small size */
         font-weight: 500;
-        color:var(--s-color);
+        color: var(--s-color);
         opacity: 0.8;
         margin-top: 3px;
     }
@@ -654,6 +657,9 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker Registered"));
+}
 
 </script>
