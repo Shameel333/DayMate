@@ -1,10 +1,10 @@
 {
   "name": "DayMate",
   "short_name": "DayMate",
-  "start_url": "./index.html",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "background_color": "#e9e9ea",
+  "theme_color": "#6f5a4b",
   "icons": [
     {
       "src": "icons/icon-192.png",
